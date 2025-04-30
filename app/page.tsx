@@ -12,7 +12,7 @@ export default async function Home() {
     <div className="min-h-screen p-24 flex flex-col items-center justify-center gap-10">
       <div className="flex flex-col items-center justify-center gap-5">
         <h1 className="text-6xl font-bold text-center">
-          Turin Devfest 2025
+          Devfest Torino 2025
         </h1>
         <p className="text-lg text-center">
           Join us for a day of learning and fun!

@@ -1,10 +1,11 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { signIn, signOut, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { signInWithGoogle, signOut } from '@/firebase/auth';
 
 export default function AuthButtons() {
   const { data: session } = useSession();
@@ -57,7 +58,7 @@ export default function AuthButtons() {
           <Button
               variant="outline"
               onClick={() => {
-                signIn('google');
+                signInWithGoogle();
               }}
           >
               Login with Google

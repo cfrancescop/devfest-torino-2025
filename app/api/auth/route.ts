@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { initializeApp, getApps } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
-import { firebaseAuth } from '@/firebase/firebaseApp';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { firebaseAuth } from '@/firebase/firebaseApp';
 
 if (!getApps().length) {
   initializeApp();
@@ -21,20 +21,17 @@ export async function POST(req: NextRequest) {
     }
 
     switch (action) {
-      case 'register': {
-        const userRecord = await adminAuth.createUser({
-          email, password
-        });
-
-        return NextResponse.json({ uid: userRecord.uid }, { status: 201 });
-      }
 
       case 'login': {
-          try {
-            const userCredential = await signInWithEmailAndPassword(firebaseAuth, email, password);
-            const user = userCredential.user;
-            const idToken = await user.getIdToken();
-            return NextResponse.json({ idToken: idToken }, {status: 200})
+        try {
+          const userCredential = await signInWithEmailAndPassword(firebaseAuth, email, password);
+          const user = userCredential.user;
+          const idToken = await user.getIdToken();
+          return NextResponse.json({
+            idToken: idToken,
+            uid: user.uid,
+            email: user.email,
+          }, { status: 200 });
           } catch (error) {
             console.error('Firebase client login error:', error);
             return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
